@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sol ❤️ This Is For You</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Playfair Display', serif;
+background:linear-gradient(135deg,#ffafbd,#ffc3a0);
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* FLOATING HEARTS */
+
+.heart{
+position:fixed;
+bottom:-20px;
+font-size:18px;
+animation:floatUp linear infinite;
+opacity:.7;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0);}
+100%{transform:translateY(-120vh);}
+}
+
+/* CONTAINER */
+
+.container{
+max-width:850px;
+margin:60px auto;
+background:white;
+border-radius:25px;
+padding:45px;
+box-shadow:0 25px 60px rgba(0,0,0,.25);
+text-align:center;
+animation:fadeIn 2s;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(40px);}
+to{opacity:1;}
+}
+
+h1{
+font-family:'Dancing Script', cursive;
+font-size:3.7rem;
+color:#e84393;
+}
+
+.subtitle{
+color:#777;
+margin-bottom:30px;
+}
+
+/* PHOTO */
+
+.photo{
+width:230px;
+height:230px;
+border-radius:50%;
+margin:20px auto;
+overflow:hidden;
+border:9px solid #fd79a8;
+box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.photo img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* LOVE LETTER */
+
+.message{
+background:#fff0f6;
+padding:28px;
+border-radius:18px;
+margin-top:25px;
+font-size:1.25rem;
+line-height:1.7;
+min-height:160px;
+}
+
+/* SLIDESHOW */
+
+.slideshow{
+margin-top:35px;
+position:relative;
+}
+
+.slide{
+display:none;
+}
+
+.slide img{
+width:100%;
+border-radius:18px;
+max-height: 429px;
+object-fit:contain;
+background:#111;
+}
+
+.slide.active{
+display:block;
+animation:fade 1.5s;
+}
+
+@keyframes fade{
+from{opacity:.4;}
+to{opacity:1;}
+}
+
+/* QUESTION */
+
+.question{
+font-size:2.2rem;
+margin:40px 0 20px;
+color:#d63031;
+font-weight:bold;
+}
+
+.buttons{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+}
+
+button{
+padding:16px 45px;
+border:none;
+border-radius:50px;
+font-size:1.4rem;
+cursor:pointer;
+transition:.3s;
+}
+
+.yes{
+background:linear-gradient(to right,#ff6b81,#ff8fab);
+color:white;
+}
+
+.no{
+background:#636e72;
+color:white;
+}
+
+button:hover{
+transform:translateY(-6px);
+}
+
+/* RESPONSE */
+
+.response{
+display:none;
+font-size:2.2rem;
+color:#e84393;
+margin-top:25px;
+animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.08);}
+100%{transform:scale(1);}
+}
+
+/* MUSIC BUTTON */
+
+.music{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#e84393;
+border:none;
+color:white;
+font-size:18px;
+padding:15px 20px;
+border-radius:40px;
+cursor:pointer;
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>My Dearest Sol</h1>
+<div class="subtitle">I made this just for you ❤️</div>
+
+<div class="photo">
+<img src="photo1.jpg">
+</div>
+
+<div class="message" id="typed"></div>
+
+<!-- SLIDESHOW -->
+
+<div class="slideshow">
+<div class="slide active"><img src="photo1.jpg"></div>
+<div class="slide"><img src="photo2.jpg"></div>
+<div class="slide"><img src="photo3.jpg"></div>
+<div class="slide"><img src="photo4.jpg"></div>
+</div>
+
+<div class="question">Will you be my Valentine?</div>
+
+<div class="buttons">
+<button class="yes" onclick="sayYes()">YES 💖</button>
+<button class="no" id="noBtn">No</button>
+</div>
+
+<div class="response" id="response">
+You just made me the happiest person alive ❤️
+</div>
+
+</div>
+
+<audio id="music" loop>
+<source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music" onclick="playMusic()">🎵 Play Our Song</button>
+
+<script>
+
+/* FLOATING HEARTS */
+
+setInterval(()=>{
+
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(Math.random()*3+4)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),7000);
+
+},300);
+
+
+/* TYPING LETTER */
+
+const text=`My love Sol,
+
+Every day with you feels like magic.
+
+Your smile is my peace.
+Your laugh is my favorite melody.
+Your presence is my greatest gift.
+
+I don't just want one Valentine…
+I want every Valentine with you.
+
+So here I am, asking the most important question...
+
+Will you be mine? ❤️`;
+
+let i=0;
+
+function type(){
+if(i<text.length){
+document.getElementById("typed").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,32);
+}
+}
+
+type();
+
+
+/* MUSIC */
+
+function playMusic(){
+document.getElementById("music").play();
+}
+
+
+/* RUNAWAY BUTTON 😄 */
+
+const no=document.getElementById("noBtn");
+
+no.addEventListener("mouseover",()=>{
+no.style.position="absolute";
+no.style.top=Math.random()*350+"px";
+no.style.left=Math.random()*350+"px";
+});
+
+
+/* SLIDESHOW */
+
+let slideIndex=0;
+const slides=document.querySelectorAll(".slide");
+
+setInterval(()=>{
+
+slides[slideIndex].classList.remove("active");
+
+slideIndex=(slideIndex+1)%slides.length;
+
+slides[slideIndex].classList.add("active");
+
+},3000);
+
+
+/* YES = HEART EXPLOSION */
+
+function sayYes(){
+
+document.getElementById("response").style.display="block";
+
+for(let i=0;i<120;i++){
+
+const heart=document.createElement("div");
+
+heart.innerHTML="💖";
+heart.style.position="fixed";
+heart.style.left="50%";
+heart.style.top="50%";
+heart.style.fontSize=(Math.random()*30+20)+"px";
+
+const angle=Math.random()*360;
+const distance=Math.random()*400;
+
+heart.style.transform=`rotate(${angle}deg) translate(${distance}px)`;
+
+heart.style.transition="1.5s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),1500);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
